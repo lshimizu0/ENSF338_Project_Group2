@@ -1,0 +1,122 @@
+{
+  "buildings": {
+    "B1": {
+      "name": "Administration Hall",
+      "rooms": {
+        "A101": {
+          "capacity": 12,
+          "room_type": "office"
+        },
+        "A102": {
+          "capacity": 10,
+          "room_type": "office"
+        },
+        "A201": {
+          "capacity": 25,
+          "room_type": "lecture"
+        }
+      },
+      "connections": {
+        "B2": 3,
+        "B3": 5
+      }
+    },
+    "B2": {
+      "name": "Science Center",
+      "rooms": {
+        "S101": {
+          "capacity": 40,
+          "room_type": "lecture"
+        },
+        "S102": {
+          "capacity": 24,
+          "room_type": "lab"
+        },
+        "S201": {
+          "capacity": 30,
+          "room_type": "lab"
+        }
+      },
+      "connections": {
+        "B1": 3,
+        "B3": 2,
+        "B4": 4
+      }
+    },
+    "B3": {
+      "name": "Engineering Complex",
+      "rooms": {
+        "E101": {
+          "capacity": 60,
+          "room_type": "lecture"
+        },
+        "E102": {
+          "capacity": 20,
+          "room_type": "lab"
+        },
+        "E201": {
+          "capacity": 18,
+          "room_type": "lab"
+        }
+      },
+      "connections": {
+        "B1": 5,
+        "B2": 2,
+        "B5": 6
+      }
+    },
+    "B4": {
+      "name": "Library",
+      "rooms": {
+        "L101": {
+          "capacity": 80,
+          "room_type": "lecture"
+        },
+        "L201": {
+          "capacity": 15,
+          "room_type": "office"
+        }
+      },
+      "connections": {
+        "B2": 4,
+        "B5": 3,
+        "B6": 5
+      }
+    },
+    "B5": {
+      "name": "Student Union",
+      "rooms": {
+        "U101": {
+          "capacity": 100,
+          "room_type": "lecture"
+        },
+        "U102": {
+          "capacity": 20,
+          "room_type": "office"
+        }
+      },
+      "connections": {
+        "B3": 6,
+        "B4": 3,
+        "B6": 2
+      }
+    },
+    "B6": {
+      "name": "Humanities Hall",
+      "rooms": {
+        "H101": {
+          "capacity": 45,
+          "room_type": "lecture"
+        },
+        "H102": {
+          "capacity": 16,
+          "room_type": "office"
+        }
+      },
+      "connections": {
+        "B4": 5,
+        "B5": 2
+      }
+    }
+  }
+}

@@ -8,13 +8,23 @@ class ServiceRequest:
         return f"[{levels[self.priority]}] {self.description}"
 
 
-    class ServiceRequestQueue:
+class ServiceRequestQueue:
         def __init__(self):
             self.heap = []
 
         def insert_request(self, request):
             self.heap.append(request)
             self.heapify_up(len(self.heap) - 1)
+
+        def process_request(self):
+            if not self.heap:
+                return None
+            top_request = self.heap[0]
+            last_request = self.heap.pop()
+            if self.heap:
+                self.heap[0] = last_request
+                self.heapify_down(0)
+            return top_request
 
         def heapify_up(self, index):
             parent_index = (index - 1) // 2
@@ -39,3 +49,21 @@ class ServiceRequest:
         def __repr__(self):
             return "\n".join(str(request) for request in self.heap)
 
+#demo
+if __name__ == "__main__":
+    queue = ServiceRequestQueue()
+    queue.insert_request(ServiceRequest("Fix leaky toilet", 2))
+    queue.insert_request(ServiceRequest("Power outage in building", 1))
+    queue.insert_request(ServiceRequest("Replace light bulb", 3))
+    queue.insert_request(ServiceRequest("Projector broken", 2))
+    queue.insert_request(ServiceRequest("Air conditioning not working", 1))
+
+    print("Current Queue:")
+    print(queue)
+
+    print("\nProcessing requests:")
+    while True:
+        request = queue.process_request()
+        if not request:
+            break
+        print(f"Processed: {request}")

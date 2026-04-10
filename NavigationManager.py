@@ -15,12 +15,13 @@ class NavigationManager:
             connections = self.campus_map["buildings"][location_id]["connections"]
             return list(connections.keys())
         except KeyError:
-            raise ValueError(f"{location_id} is not a valid location ID")
+            print(f"{location_id} is not a valid location ID")
+            return -1
 
         
     def set_starting_point(self, building_id):
         self.current_location = building_id
-        self.history.append(building_id)
+        self.history.append(building_id) 
 
     # Push (append)
     def push(self, building_id):
@@ -31,18 +32,20 @@ class NavigationManager:
 
         if self.current_location is None:
             if building_id not in self.campus_map["buildings"]:
-                raise ValueError(f"{building_id} is not a valid location ID")
+                print(f"{building_id} is not a valid location ID")
+                return -1
             self.current_location = building_id
             self.history.append(building_id)
             return
 
         valid_connections = self.get_connections(self.current_location)
 
-        if building_id not in valid_connections:
-            raise ValueError(
+        if valid_connections == -1:
+            print(
                 f"Cannot move from {self.current_location} to {building_id}. "
                 f"Valid options: {valid_connections}"
             )
+            return -1
 
         # If we're at capacity, remove the oldest element
         if len(self.history) >= self.max_undo:

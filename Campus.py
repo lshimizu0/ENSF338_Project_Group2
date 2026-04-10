@@ -1,4 +1,5 @@
 import copy
+from Building import Building
 
 class Campus:
     def __init__(self, campus_map_dict):
@@ -24,9 +25,28 @@ class Campus:
 
     def setup(self, campus_map_dict):
         buildings_dict = campus_map_dict.get('buildings')
+        
+        # register all buildings
         for building_id in buildings_dict.keys():
             self.add_vertex_data(building_id)
+
+        # build the objects and pathways
         for building_id, building_data in buildings_dict.items():
+            # Create the Building Object
+            new_building = Building(building_id, building_data.get('name'), building_data.get('location', (0,0)))
+            
+            # Add Rooms to that Building
+            rooms_dict = building_data.get('rooms', {})
+            for r_id, r_info in rooms_dict.items():
+                new_building.insert_room(r_id, 
+                    r_info['capacity'], 
+                    r_info['room_type']
+                )
+                
+            # 3. Store in the Dictionary
+            self.buildings[building_id] = new_building
+            
+            # 4. Create the Pathways (Edges)
             for connection, weight in building_data.get('connections', {}).items():
                 self.add_edge(building_id, connection, weight)
 
@@ -66,3 +86,15 @@ class Campus:
             path = [self.vertex_data[start_vertex]]
 
         return paths, distances
+    
+    def add_building(self, building):
+        self.buildings[building.building_id] = building
+
+    def lookup_resource(self, b_id, r_id=None):
+        
+        building = self.buildings.get(b_id)
+        if not building:
+            return None
+        if r_id:
+            return building.get_room(r_id) # O(1) room lookup
+        return building

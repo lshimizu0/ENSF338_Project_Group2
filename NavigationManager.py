@@ -18,13 +18,9 @@ class NavigationManager:
             raise ValueError(f"{location_id} is not a valid location ID")
 
         
-    def set_starting_point(self):
-        starting_point = input("What is your location right Now?: ").strip()
-
-        if starting_point not in self.campus_map["buildings"]:
-            raise ValueError(f"{starting_point} is not a valid location ID")
-
-        return starting_point
+    def set_starting_point(self, building_id):
+        self.current_location = building_id
+        self.history.append(building_id)
 
     # Push (append)
     def push(self, building_id):

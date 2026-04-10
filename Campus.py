@@ -1,4 +1,5 @@
 import copy
+from Building import Building
 
 class Campus:
     def __init__(self, campus_map_dict):
@@ -27,25 +28,34 @@ class Campus:
         for building_id in buildings_dict.keys():
             self.add_vertex_data(building_id)
         for building_id, building_data in buildings_dict.items():
+            # building = Building(building_id, building_data)
             for connection, weight in building_data.get('connections', {}).items():
                 self.add_edge(building_id, connection, weight)
 
 
-    def shortest_path(self, start_vertex_data, end):
-        start_vertex = self.vertex_data.index(start_vertex_data)
+    def shortest_path(self, start_vertex_data, end_vertex_data):
+        try:
+
+            start_vertex = self.vertex_data.index(start_vertex_data)
+            end_vertex = self.vertex_data.index(end_vertex_data)
+        except ValueError:
+            return -1
+
         distances = [float('inf')] * self.size
         distances[start_vertex] = 0
         visited = [False] * self.size
-        path = [self.vertex_data[start_vertex]]
+        path = []
         paths = [[] for _ in range(self.size)]
 
 
         for _ in range(self.size):
+
             min_distance = float('inf')
             u = None
             for i in range(self.size):
                 if not visited[i] and distances[i] < min_distance:
                     min_distance = distances[i]
+                    path = [self.vertex_data[i]]
                     u = i
 
             if u is None:
@@ -59,10 +69,11 @@ class Campus:
                     alt = distances[u] + self.pathways[u][v]
                     if alt < distances[v]:
                         distances[v] = alt
-                        paths[v] = copy.deepcopy(path)
+                        if path and path[0] != start_vertex_data:
+                            path.pop(0)
+                        paths[v] = paths[u]+copy.deepcopy(path)
+                        if path and path[0] == start_vertex_data:
+                            path.pop()
                     else:
                         path.pop()
-
-            path = [self.vertex_data[start_vertex]]
-
-        return paths, distances
+        return paths[end_vertex], distances[end_vertex]

@@ -27,7 +27,7 @@ class NavigationManager:
         return starting_point
 
     # Push (append)
-    def push(self, building_name):
+    def push(self, building_id):
 
         if building_id == "undo":
             self.pop()

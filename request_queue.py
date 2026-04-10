@@ -18,6 +18,7 @@ class RequestNode:
 class RequestQueue:
     """
     A FIFO queue for processing incoming requests.
+    Has a head and tail pointer for O(1) complexity on both enqueue and dequeue.
     """
     def __init__(self):
         """
@@ -65,8 +66,18 @@ class RequestQueue:
         Returns:
             The data inside the RequestNode at the head, detailing the request
         """
+        if self.head is None:
+            return None
         return self.head.data
 
 
 #testing
 
+new_queue : RequestQueue = RequestQueue()
+
+for i in range(20):
+    print("queued: request " + str(i))
+    new_queue.enqueue("request " + str(i))
+
+for i in range(20):
+    print("dequeued: " + new_queue.dequeue())

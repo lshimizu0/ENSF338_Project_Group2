@@ -1,5 +1,4 @@
 import copy
-from Building import Building
 
 class Campus:
     def __init__(self, campus_map_dict):
@@ -35,11 +34,10 @@ class Campus:
 
     def shortest_path(self, start_vertex_data, end_vertex_data):
         try:
-
             start_vertex = self.vertex_data.index(start_vertex_data)
             end_vertex = self.vertex_data.index(end_vertex_data)
         except ValueError:
-            return -1
+            return -1, -1
 
         distances = [float('inf')] * self.size
         distances[start_vertex] = 0

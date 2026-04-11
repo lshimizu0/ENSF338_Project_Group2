@@ -10,12 +10,12 @@ class NavigationManager:
         self.current_location = None
 
 
-    def get_connections(self, location_id):
+    def get_connections(self):
         try:
-            connections = self.campus_map["buildings"][location_id]["connections"]
+            connections = self.campus_map["buildings"][self.current_location]["connections"]
             return list(connections.keys())
         except KeyError:
-            print(f"{location_id} is not a valid location ID")
+            print(f"{self.current_location} is not a valid location ID")
             return -1
 
         
@@ -38,7 +38,7 @@ class NavigationManager:
             self.history.append(building_id)
             return
 
-        valid_connections = self.get_connections(self.current_location)
+        valid_connections = self.get_connections()
 
         if valid_connections == -1:
             print(
@@ -57,8 +57,10 @@ class NavigationManager:
         
     # Pop (undo)
     def pop(self):
-        if not self.history:
-            return None
+
+        if not self.history or len(self.history) == 1:
+            print("No Travel History Found")
+            return -1
         popped = self.history.pop()
         if not self.history:
             self.current_location = None

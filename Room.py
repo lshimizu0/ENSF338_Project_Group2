@@ -4,3 +4,6 @@ class Room:
         self.capacity = capacity # max occupancy
         self.room_type = room_type # "lecture", "lab", "office"
         self.bookings = [] # list of Booking objects
+    def __repr__(self):
+        return f"------------------------------------\nRoom id = {self.room_id}\ncapacity = {self.capacity}\nroom_type = {self.room_type}\n------------------------------------"
+

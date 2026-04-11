@@ -1,3 +1,4 @@
+from BookingSystem import BookingManager
 from Room import Room
 import time
 
@@ -7,6 +8,8 @@ class Building:
         self.name = name # "Information and Comm. Tech."
         self.location = location # (lat, lon) or grid coords
         self.rooms = {} # room_id -> Room
+        self.booking_manager = BookingManager() # bookings
+
 
    # Copyright Gemini 3 Flash
     def get_room(self, room_id):

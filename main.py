@@ -14,13 +14,12 @@ for building_id in campus_map['buildings'].keys():
 
 navigation = NavigationManager(campus_map)
 campus = Campus(campus_map)
-
+startup = True
 # ---------------------------Program---------------------------
 print("Campus Navigation and Event Manager System")
 print("Starting program...")
 while True:
     choice = input("Main Menu\n1. Navigation\n2. Room Bookings\n3. Service Requests\n4. Quit\nChoice: ").strip()
-    startup = True
     match choice:
         # Navigation
         case "1":

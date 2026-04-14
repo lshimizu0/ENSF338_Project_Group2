@@ -24,7 +24,7 @@ class Booking:
         self.date_time = (date, start_time)
 
     def __repr__(self):
-        return (f"Booking id = {self.booking_id}, Room id = {self.room_id}, Event name = {self.event_name}, Date = {self.date}, Time Range = {self.start_time}-{self.end_time})")
+        return (f"Booking id = {self.booking_id}, Room id = {self.room_id}, Event name = {self.event_name}, Date = {self.date}, Time Range = {self.start_time}-{self.end_time}")
 
 
 class Node:

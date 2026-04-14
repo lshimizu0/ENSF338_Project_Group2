@@ -24,8 +24,8 @@ def booking_cli(building_name, manager):
         match choice:
             # Add booking
             case "1":
-                booking_id = input("Booking ID (e.g. BK001): ").strip()
-                room_id = input("Room ID: ").strip()
+                booking_id = input("\nBooking ID (e.g. BK001): ").strip()
+                room_id = input("Room ID (e.g. E101): ").strip()
                 event_name = input("Event name: ").strip()
                 organizer = input("Name: ").strip()
                 date = input("Date (YYYY-MM-DD): ").strip()

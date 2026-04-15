@@ -50,7 +50,9 @@ class RequestQueue:
             The data inside the RequestNode at the head, detailing the request
         """
         if self.head is None:
+            print("Queue is empty.")
             return None
+            
         temp : RequestNode = self.head
 
         self.head = self.head.next
@@ -67,6 +69,7 @@ class RequestQueue:
             The data inside the RequestNode at the head, detailing the request
         """
         if self.head is None:
+            print("Queue is empty.")
             return None
         return self.head.data
 

@@ -1,9 +1,6 @@
 from NavigationManager import NavigationManager
 from Campus import Campus
 import json
-from BookingSystem import Booking, BookingManager
-from BookingUI import booking_cli
-
 
 # ---------------------------Setup---------------------------
 with open('campus_map.json') as json_data:
@@ -18,8 +15,6 @@ for building_id in campus_map['buildings'].keys():
 navigation = NavigationManager(campus_map)
 campus = Campus(campus_map)
 startup = True
-
-booking_manager = BookingManager()
 # ---------------------------Program---------------------------
 print("Campus Navigation and Event Manager System")
 print("Starting program...")
@@ -55,7 +50,7 @@ while True:
                         print(f'The shortest path to {dest} is', end=' ')
                         for node in path:
                             if node is not path[-1]:
-                                print(f"{campus_map['buildings'][node]['name']}->", end=' ')
+                                print(f'{campus_map['buildings'][node]['name']}->', end=' ')
                             else:
                                 print(campus_map['buildings'][node]['name'], end=' ')
                         print(f'which will take {time} minutes')
@@ -78,17 +73,7 @@ while True:
                         break
         # Room Booking
         case '2':
-            building_name = input("What building would you like to book a room in?: ").strip().lower()
-            if name_to_id.get(building_name, None) is None:
+            building = input("What building would you like to book a room in?: ").strip().lower()
+            if name_to_id.get(building, None) is None:
                 print("Not a valid building name")
                 continue
-            
-            booking_cli(building_name, booking_manager)
-
-                
-
-        case '4':
-            print("Thank you for using the program.")
-            break
-
-            

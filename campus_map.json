@@ -1,0 +1,298 @@
+{
+  "buildings": {
+    "B1": {
+      "name": "Administration Hall",
+      "rooms": {
+        "A101": { "capacity": 12, "room_type": "office" },
+        "A102": { "capacity": 10, "room_type": "office" },
+        "A201": { "capacity": 25, "room_type": "lecture" },
+        "A202": { "capacity": 30, "room_type": "lecture" },
+        "A301": { "capacity": 18, "room_type": "meeting" }
+      },
+      "connections": {
+        "B2": 3,
+        "B3": 5,
+        "B7": 6
+      }
+    },
+    "B2": {
+      "name": "Science Center",
+      "rooms": {
+        "S101": { "capacity": 40, "room_type": "lecture" },
+        "S102": { "capacity": 24, "room_type": "lab" },
+        "S201": { "capacity": 30, "room_type": "lab" },
+        "S202": { "capacity": 28, "room_type": "lab" },
+        "S301": { "capacity": 14, "room_type": "office" }
+      },
+      "connections": {
+        "B1": 3,
+        "B3": 2,
+        "B4": 4,
+        "B8": 7
+      }
+    },
+    "B3": {
+      "name": "Engineering Complex",
+      "rooms": {
+        "E101": { "capacity": 60, "room_type": "lecture" },
+        "E102": { "capacity": 20, "room_type": "lab" },
+        "E201": { "capacity": 18, "room_type": "lab" },
+        "E202": { "capacity": 22, "room_type": "lab" },
+        "E301": { "capacity": 16, "room_type": "office" }
+      },
+      "connections": {
+        "B1": 5,
+        "B2": 2,
+        "B5": 6,
+        "B9": 4
+      }
+    },
+    "B4": {
+      "name": "Library",
+      "rooms": {
+        "L101": { "capacity": 80, "room_type": "lecture" },
+        "L102": { "capacity": 35, "room_type": "study" },
+        "L201": { "capacity": 15, "room_type": "office" },
+        "L202": { "capacity": 20, "room_type": "study" },
+        "L301": { "capacity": 12, "room_type": "archive" }
+      },
+      "connections": {
+        "B2": 4,
+        "B5": 3,
+        "B6": 5,
+        "B10": 6
+      }
+    },
+    "B5": {
+      "name": "Student Union",
+      "rooms": {
+        "U101": { "capacity": 100, "room_type": "lecture" },
+        "U102": { "capacity": 20, "room_type": "office" },
+        "U201": { "capacity": 50, "room_type": "meeting" },
+        "U202": { "capacity": 25, "room_type": "office" }
+      },
+      "connections": {
+        "B3": 6,
+        "B4": 3,
+        "B6": 2,
+        "B11": 5
+      }
+    },
+    "B6": {
+      "name": "Humanities Hall",
+      "rooms": {
+        "H101": { "capacity": 45, "room_type": "lecture" },
+        "H102": { "capacity": 16, "room_type": "office" },
+        "H201": { "capacity": 22, "room_type": "seminar" },
+        "H202": { "capacity": 18, "room_type": "office" }
+      },
+      "connections": {
+        "B4": 5,
+        "B5": 2,
+        "B12": 4
+      }
+    },
+    "B7": {
+      "name": "Business School",
+      "rooms": {
+        "BS101": { "capacity": 55, "room_type": "lecture" },
+        "BS102": { "capacity": 20, "room_type": "office" },
+        "BS201": { "capacity": 30, "room_type": "seminar" },
+        "BS202": { "capacity": 18, "room_type": "office" }
+      },
+      "connections": {
+        "B1": 6,
+        "B8": 2,
+        "B13": 5
+      }
+    },
+    "B8": {
+      "name": "Medical Sciences Building",
+      "rooms": {
+        "M101": { "capacity": 70, "room_type": "lecture" },
+        "M102": { "capacity": 26, "room_type": "lab" },
+        "M201": { "capacity": 32, "room_type": "lab" },
+        "M202": { "capacity": 15, "room_type": "office" },
+        "M301": { "capacity": 18, "room_type": "research" }
+      },
+      "connections": {
+        "B2": 7,
+        "B7": 2,
+        "B9": 3,
+        "B14": 6
+      }
+    },
+    "B9": {
+      "name": "Computer Science Center",
+      "rooms": {
+        "C101": { "capacity": 65, "room_type": "lecture" },
+        "C102": { "capacity": 24, "room_type": "lab" },
+        "C201": { "capacity": 28, "room_type": "lab" },
+        "C202": { "capacity": 20, "room_type": "office" },
+        "C301": { "capacity": 40, "room_type": "meeting" }
+      },
+      "connections": {
+        "B3": 4,
+        "B8": 3,
+        "B10": 2,
+        "B15": 5
+      }
+    },
+    "B10": {
+      "name": "Arts",
+      "rooms": {
+        "AR101": { "capacity": 50, "room_type": "lecture" },
+        "AR102": { "capacity": 18, "room_type": "studio" },
+        "AR201": { "capacity": 22, "room_type": "studio" },
+        "AR202": { "capacity": 14, "room_type": "office" }
+      },
+      "connections": {
+        "B4": 6,
+        "B9": 2,
+        "B11": 4,
+        "B16": 7
+      }
+    },
+    "B11": {
+      "name": "Athletics Center",
+      "rooms": {
+        "AT101": { "capacity": 120, "room_type": "gym" },
+        "AT102": { "capacity": 35, "room_type": "fitness" },
+        "AT201": { "capacity": 20, "room_type": "office" },
+        "AT202": { "capacity": 40, "room_type": "training" }
+      },
+      "connections": {
+        "B5": 5,
+        "B10": 4,
+        "B12": 3,
+        "B17": 6
+      }
+    },
+    "B12": {
+      "name": "Law School",
+      "rooms": {
+        "LW101": { "capacity": 60, "room_type": "lecture" },
+        "LW102": { "capacity": 18, "room_type": "office" },
+        "LW201": { "capacity": 25, "room_type": "seminar" },
+        "LW202": { "capacity": 16, "room_type": "office" }
+      },
+      "connections": {
+        "B6": 4,
+        "B11": 3,
+        "B18": 5
+      }
+    },
+    "B13": {
+      "name": "Mathematics Institute",
+      "rooms": {
+        "MA101": { "capacity": 48, "room_type": "lecture" },
+        "MA102": { "capacity": 20, "room_type": "office" },
+        "MA201": { "capacity": 26, "room_type": "seminar" },
+        "MA202": { "capacity": 15, "room_type": "research" }
+      },
+      "connections": {
+        "B7": 5,
+        "B14": 2,
+        "B19": 6
+      }
+    },
+    "B14": {
+      "name": "Physics Research Wing",
+      "rooms": {
+        "P101": { "capacity": 55, "room_type": "lecture" },
+        "P102": { "capacity": 30, "room_type": "lab" },
+        "P201": { "capacity": 22, "room_type": "lab" },
+        "P202": { "capacity": 18, "room_type": "office" },
+        "P301": { "capacity": 12, "room_type": "research" }
+      },
+      "connections": {
+        "B8": 6,
+        "B13": 2,
+        "B15": 3,
+        "B20": 5
+      }
+    },
+    "B15": {
+      "name": "Chemistry Block",
+      "rooms": {
+        "CH101": { "capacity": 58, "room_type": "lecture" },
+        "CH102": { "capacity": 28, "room_type": "lab" },
+        "CH201": { "capacity": 25, "room_type": "lab" },
+        "CH202": { "capacity": 17, "room_type": "office" }
+      },
+      "connections": {
+        "B9": 5,
+        "B14": 3,
+        "B16": 4
+      }
+    },
+    "B16": {
+      "name": "Music and Performance Hall",
+      "rooms": {
+        "MP101": { "capacity": 90, "room_type": "lecture" },
+        "MP102": { "capacity": 30, "room_type": "studio" },
+        "MP201": { "capacity": 22, "room_type": "practice" },
+        "MP202": { "capacity": 15, "room_type": "office" }
+      },
+      "connections": {
+        "B10": 7,
+        "B15": 4,
+        "B17": 2
+      }
+    },
+    "B17": {
+      "name": "Residence Services",
+      "rooms": {
+        "R101": { "capacity": 35, "room_type": "office" },
+        "R102": { "capacity": 20, "room_type": "meeting" },
+        "R201": { "capacity": 18, "room_type": "office" }
+      },
+      "connections": {
+        "B11": 6,
+        "B16": 2,
+        "B18": 3
+      }
+    },
+    "B18": {
+      "name": "International Center",
+      "rooms": {
+        "I101": { "capacity": 40, "room_type": "lecture" },
+        "I102": { "capacity": 18, "room_type": "office" },
+        "I201": { "capacity": 24, "room_type": "meeting" },
+        "I202": { "capacity": 16, "room_type": "office" }
+      },
+      "connections": {
+        "B12": 5,
+        "B17": 3,
+        "B19": 4
+      }
+    },
+    "B19": {
+      "name": "Innovation Hub",
+      "rooms": {
+        "IH101": { "capacity": 75, "room_type": "lecture" },
+        "IH102": { "capacity": 26, "room_type": "lab" },
+        "IH201": { "capacity": 30, "room_type": "meeting" },
+        "IH202": { "capacity": 20, "room_type": "office" }
+      },
+      "connections": {
+        "B13": 6,
+        "B18": 4,
+        "B20": 2
+      }
+    },
+    "B20": {
+      "name": "Environmental Studies Center",
+      "rooms": {
+        "EN101": { "capacity": 52, "room_type": "lecture" },
+        "EN102": { "capacity": 24, "room_type": "lab" },
+        "EN201": { "capacity": 18, "room_type": "office" },
+        "EN202": { "capacity": 20, "room_type": "research" }
+      },
+      "connections": {
+        "B14": 5,
+        "B19": 2
+      }
+    }
+  }
+}

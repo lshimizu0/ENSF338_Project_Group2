@@ -1,0 +1,13 @@
+{'buildings': {
+    'id': {
+        'name': str,
+        'rooms': {
+            'room_id': {
+                'capacity':int,
+                'room_type':'lecture lab or office'
+                }
+            },
+        'connections': {'id': int(penalty to get there dijkstra algorithm)}
+        }
+    }
+}

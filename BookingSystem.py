@@ -290,7 +290,7 @@ class BookingManager:
         self.bst.remove(booking_id)
 
         if room is not None and booking in room.bookings:
-            room.bookings.remove(booking)
+            room.bookings.pop(booking)
 
         print(f"REMOVED. Removed booking {booking_id}")
         

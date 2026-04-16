@@ -1,8 +1,6 @@
-from BookingSystem import *
 from NavigationManager import NavigationManager
 from Campus import Campus
-from BookingUI import booking_cli
-import BookingSystem
+from service_queue import ServiceRequest, ServiceRequestQueue
 import json
 
 # ---------------------------Setup---------------------------
@@ -15,14 +13,16 @@ name_to_id = {}
 for building_id in campus_map['buildings'].keys():
     name_to_id[campus_map['buildings'][building_id]['name'].lower()] = building_id
 
-booking_id = "0"
-
 navigation = NavigationManager(campus_map)
 campus = Campus(campus_map)
-bookingManager = BookingSystem.BookingManager()
-
-
 startup = True
+
+priority_map = {
+    "high": 1,
+    "medium": 2,
+    "low": 3
+}
+service_queue = ServiceRequestQueue()
 # ---------------------------Program---------------------------
 print("Campus Navigation and Event Manager System")
 print("Starting program...")
@@ -81,9 +81,90 @@ while True:
                         break
         # Room Booking
         case '2':
-            booking_cli(bookingManager, campus, name_to_id)
+            building = input("What building would you like to book a room in?: ").strip().lower()
+            if name_to_id.get(building, None) is None:
+                print("Not a valid building name")
+                continue
 
 
 
 
 
+        case "3":
+            while True:
+                lookup_choice = input(
+                    "\nFast Lookup Menu\n"
+                    "1. Look up building\n"
+                    "2. Look up room\n"
+                    "3. Service Request\n"
+                    "4. View Service Queue\n"
+                    "5. Back\n"
+                    "Choice: "
+                ).strip()
+
+                match lookup_choice:
+                    case "1":
+                        building_name = input("Enter building name: ").strip()
+                        building = campus.lookup_building_by_name(building_name)
+
+                        if building is None:
+                            print("Building not found.")
+                            continue
+
+                        print("\nBuilding found:")
+                        print("Name:", building.name)
+                        print("Internal ID:", building.building_id)
+                        print("Rooms:")
+                        for room_id in building.get_room_ids():
+                            print(room_id)
+
+                    case "2":
+                        building_name = input("Enter building name: ").strip()
+                        room_ids = campus.get_room_ids_by_building_name(building_name)
+
+                        if room_ids is None:
+                            print("Building not found.")
+                            continue
+
+                        print("Available rooms:")
+                        for room_id in room_ids:
+                            print(room_id)
+
+                        room_id = input("Enter room ID: ").strip()
+                        room = campus.lookup_room_by_building_name(building_name, room_id)
+
+                        if room is None:
+                            print("Room not found.")
+                            continue
+
+                        print("\nRoom found:")
+                        print("Room ID:", room.room_id)
+                        print("Capacity:", room.capacity)
+                        print("Type:", room.room_type)
+
+                    case "3":
+                        description = input("Enter your problem: ").strip()
+                        severity_input = input("Enter severity (low, medium, high): ").strip().lower()
+
+                        priority = priority_map.get(severity_input)
+
+                        if priority is None:
+                            print("Invalid severity. Please enter low, medium, or high.")
+                            continue
+
+                        request = ServiceRequest(description, priority)
+                        service_queue.insert_request(request)
+
+                        print("Request added to queue.")
+
+                    case "4":
+                        if not service_queue.heap:
+                            print("Service queue is empty.")
+                        else:
+                            print("\nCurrent Service Queue:")
+                            print(service_queue)
+
+                    case "5":
+                        break
+                    case _:
+                        print("Invalid choice.")

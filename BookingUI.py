@@ -54,9 +54,9 @@ def booking_cli(manager, campus, name_to_id):
                 booking_id = input("Booking ID (e.g. BK001): ").strip()
                 room_id = input("Room Id: ").strip()
                 room = None
-                for building in campus.buildings:
-                    if building.get(room_id, None) is not None:
-                        room = building.get(room)
+                for building in campus.buildings.values():
+                    if building.rooms.get(room_id, None) is not None:
+                        room = building.rooms.get(room_id)
                         break
                 if not room:
                     print("Not a valid room id")

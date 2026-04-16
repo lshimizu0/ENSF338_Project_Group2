@@ -1,6 +1,7 @@
-from BookingSystem import Booking
+from BookingSystem import *
 from NavigationManager import NavigationManager
 from Campus import Campus
+from BookingUI import booking_cli
 import BookingSystem
 import json
 
@@ -80,36 +81,9 @@ while True:
                         break
         # Room Booking
         case '2':
-            building_id = input("What building do you want to book in?: ").strip().lower()
-            if name_to_id.get(building_id, None) is not None:
-                building_id = name_to_id[building_id]
-            else:
-                print("Not a valid building name")
-                continue
-            print("Rooms Available:")
-            for room in campus.buildings[building_id].rooms.values():
-                print(room)
-            roomID = input("Enter the id of the room you would like to book in: ").strip()
-            if campus.buildings[building_id].rooms.get(roomID, None) is None:
-                print("Not a valid room id")
-                continue
-            print("Current Bookings: ")
-            if not campus.buildings[building_id].rooms[roomID].bookings:
-                print("No current bookings")
-            else:
-                for booking in campus.buildings[building_id].rooms[roomID].bookings:
-                    print(booking)
-            date = input("Date For booking(YYYY-MM-DD): ")
-            start_time = input("Start Time for booking(HH:MM 24h clock): ")
-            end_time = input("End Time for booking(HH:MM 24h clock): ")
-            event_name = input("Event Name for booking: ")
-            organizer_name = input("Organizer Name for booking: ")
+            booking_cli(bookingManager, campus, name_to_id)
 
-            booking = BookingSystem.Booking(booking_id, roomID, event_name, date, start_time, end_time, organizer_name)
-            booking_id = int(booking_id)
-            booking_id+=1
-            booking_id = str(booking_id)
-            bookingManager.add_booking(booking)
+
 
 
 

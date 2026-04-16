@@ -11,7 +11,9 @@ class Building:
         self.booking_manager = BookingManager() # bookings
 
 
-   # Copyright Gemini 3 Flash
+    def get_room_ids(self):
+        return list(self.rooms.keys())
+
     def get_room(self, room_id):
         return self.rooms.get(room_id)
 

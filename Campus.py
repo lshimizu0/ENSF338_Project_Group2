@@ -9,6 +9,7 @@ class Campus:
     def __init__(self, campus_map_dict):
         if not campus_map_dict:
             raise Exception("Campus map dictionary is empty")
+        self.name_to_id = {}
         self.buildings = {} # building_id -> Building
         self.capacity = len(campus_map_dict.get('buildings').keys())
         self.pathways = [[0] * self.capacity for _ in range(self.capacity)]
@@ -37,6 +38,7 @@ class Campus:
                 room = Room(room_id, buildings_dict[building_id]['rooms'][room_id]['capacity'], buildings_dict[building_id]['rooms'][room_id]['room_type'])
                 building.rooms[room_id] = copy.deepcopy(room)
             self.buildings[building_id] = copy.deepcopy(building)
+            self.name_to_id[building.name.strip().lower()] = building_id 
         for building_id, building_data in buildings_dict.items():
             # building = Building(building_id, building_data)
             for connection, weight in building_data.get('connections', {}).items():
@@ -88,6 +90,25 @@ class Campus:
                         path.pop()
         return paths[end_vertex], distances[end_vertex]
 
-    def add_building(self, building):
+    def get_building_id_by_name(self, building_name):
+        if building_name is None:
+            return None
+        return self.name_to_id.get(building_name.strip().lower())
 
-        self.buildings[building.building_id] = building
+    def lookup_building_by_name(self, building_name):
+        building_id = self.get_building_id_by_name(building_name)
+        if building_id is None:
+            return None
+        return self.buildings.get(building_id)
+
+    def lookup_room_by_building_name(self, building_name, room_id):
+        building = self.lookup_building_by_name(building_name)
+        if building is None:
+            return None
+        return building.lookup_room(room_id)
+
+    def get_room_ids_by_building_name(self, building_name):
+        building = self.lookup_building_by_name(building_name)
+        if building is None:
+            return None
+        return building.get_room_ids()

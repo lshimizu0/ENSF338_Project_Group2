@@ -257,6 +257,9 @@ class BookingManager:
         else:
             booking.date = date_check
         booking.date_time = (booking.date, booking.start_time)
+        if booking.start_time >= booking.end_time:
+            print("End time must be later than start time.")
+            return False
         # check if booking time overlaps with other
         if self.bst.overlap_booking(self.bst.root, booking):
             print(f"Error. Booking time overlaps with other booking")

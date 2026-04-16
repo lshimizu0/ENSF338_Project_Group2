@@ -42,6 +42,9 @@ def booking_cli(manager, campus, name_to_id):
                 end_time = input("End Time for booking(HH:MM 24h clock): ")
                 event_name = input("Event Name for booking: ")
                 organizer_name = input("Organizer Name for booking: ")
+                if not all([roomID, event_name, organizer_name, date, start_time, end_time]):
+                    print("ERROR: No fields can be left empty")
+                    continue
 
                 booking = Booking(roomID, event_name, date, start_time, end_time, organizer_name)
                 manager.add_booking(booking, room)

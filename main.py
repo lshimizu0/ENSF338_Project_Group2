@@ -1,5 +1,6 @@
 from NavigationManager import NavigationManager
 from Campus import Campus
+from service_queue import ServiceRequest, ServiceRequestQueue
 import json
 
 # ---------------------------Setup---------------------------
@@ -15,6 +16,13 @@ for building_id in campus_map['buildings'].keys():
 navigation = NavigationManager(campus_map)
 campus = Campus(campus_map)
 startup = True
+
+priority_map = {
+    "high": 1,
+    "medium": 2,
+    "low": 3
+}
+service_queue = ServiceRequestQueue()
 # ---------------------------Program---------------------------
 print("Campus Navigation and Event Manager System")
 print("Starting program...")
@@ -88,7 +96,9 @@ while True:
                     "\nFast Lookup Menu\n"
                     "1. Look up building\n"
                     "2. Look up room\n"
-                    "3. Back\n"
+                    "3. Service Request\n"
+                    "4. View Service Queue\n"
+                    "5. Back\n"
                     "Choice: "
                 ).strip()
 
@@ -133,7 +143,28 @@ while True:
                         print("Type:", room.room_type)
 
                     case "3":
-                        break
+                        description = input("Enter your problem: ").strip()
+                        severity_input = input("Enter severity (low, medium, high): ").strip().lower()
 
+                        priority = priority_map.get(severity_input)
+
+                        if priority is None:
+                            print("Invalid severity. Please enter low, medium, or high.")
+                            continue
+
+                        request = ServiceRequest(description, priority)
+                        service_queue.insert_request(request)
+
+                        print("Request added to queue.")
+
+                    case "4":
+                        if not service_queue.heap:
+                            print("Service queue is empty.")
+                        else:
+                            print("\nCurrent Service Queue:")
+                            print(service_queue)
+
+                    case "5":
+                        break
                     case _:
                         print("Invalid choice.")

@@ -1,5 +1,8 @@
+from BookingSystem import *
 from NavigationManager import NavigationManager
 from Campus import Campus
+from BookingUI import booking_cli
+import BookingSystem
 import json
 
 # ---------------------------Setup---------------------------
@@ -12,8 +15,13 @@ name_to_id = {}
 for building_id in campus_map['buildings'].keys():
     name_to_id[campus_map['buildings'][building_id]['name'].lower()] = building_id
 
+booking_id = "0"
+
 navigation = NavigationManager(campus_map)
 campus = Campus(campus_map)
+bookingManager = BookingSystem.BookingManager()
+
+
 startup = True
 # ---------------------------Program---------------------------
 print("Campus Navigation and Event Manager System")
@@ -73,7 +81,9 @@ while True:
                         break
         # Room Booking
         case '2':
-            building = input("What building would you like to book a room in?: ").strip().lower()
-            if name_to_id.get(building, None) is None:
-                print("Not a valid building name")
-                continue
+            booking_cli(bookingManager, campus, name_to_id)
+
+
+
+
+

@@ -1,5 +1,10 @@
 import copy
 
+from fontTools.mtiLib import build
+
+from Building import Building
+from Room import Room
+
 class Campus:
     def __init__(self, campus_map_dict):
         if not campus_map_dict:
@@ -10,6 +15,7 @@ class Campus:
         self.vertex_data = [''] * self.capacity
         self.size = 0
         self.setup(campus_map_dict)
+
 
     # u -> v, weight = weight
     def add_edge(self, start, end, weight):
@@ -26,10 +32,16 @@ class Campus:
         buildings_dict = campus_map_dict.get('buildings')
         for building_id in buildings_dict.keys():
             self.add_vertex_data(building_id)
+            building = Building(building_id, buildings_dict[building_id]['name'], (0, 0))
+            for room_id in buildings_dict[building_id]['rooms'].keys():
+                room = Room(room_id, buildings_dict[building_id]['rooms'][room_id]['capacity'], buildings_dict[building_id]['rooms'][room_id]['room_type'])
+                building.rooms[room_id] = copy.deepcopy(room)
+            self.buildings[building_id] = copy.deepcopy(building)
         for building_id, building_data in buildings_dict.items():
             # building = Building(building_id, building_data)
             for connection, weight in building_data.get('connections', {}).items():
                 self.add_edge(building_id, connection, weight)
+
 
 
     def shortest_path(self, start_vertex_data, end_vertex_data):
@@ -75,3 +87,7 @@ class Campus:
                     else:
                         path.pop()
         return paths[end_vertex], distances[end_vertex]
+
+    def add_building(self, building):
+
+        self.buildings[building.building_id] = building

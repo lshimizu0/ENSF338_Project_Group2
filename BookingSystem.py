@@ -1,8 +1,9 @@
 from datetime import datetime
+import re
 
 class Booking:
-    def __init__(self, booking_id: str, room_id: str, event_name: str,
-                 date: str, start_time: str, end_time: str, organizer: str):
+    def __init__(self, room_id: str, event_name: str,
+                 date: str, start_time: str, end_time: str, organizer: str, booking_id = None):
         """
         booking_id  : unique identifier, e.g. "BK001"
         room_id     : e.g. "E101"
@@ -24,9 +25,7 @@ class Booking:
         self.date_time = (date, start_time)
 
     def __repr__(self):
-        return (f"Booking id = {self.booking_id}, Room id = {self.room_id},\
-                Event name = {self.event_name}, Date = {self.date}, \
-                Time Range = {self.start_time}-{self.end_time})")
+        return (f"-------------------------------\nBooking id = {self.booking_id}\nRoom id = {self.room_id},\nEvent name = {self.event_name}\nDate = {self.date}\nTime Range = {self.start_time}-{self.end_time}\n-------------------------------")
 
 
 class Node:
@@ -46,14 +45,27 @@ class BookingBST:
         self.root = self.insertHelper(self.root, booking)
         self.booking_number += 1
 
+    def overlap_booking(self, root, booking):
+        if root is None:
+            return False
+        if self.overlap_booking(root.left, booking):
+            return True
+        if (root.booking.room_id == booking.room_id
+                and root.booking.date == booking.date
+                and root.booking.start_time < booking.end_time
+                and booking.start_time < root.booking.end_time):
+            return True
+        return self.overlap_booking(root.right, booking)
+
+
     def insertHelper(self, node: Node, booking: Booking):
         if node is None:
             return Node(booking)
-        
         elif booking.date_time < node.data_time:
             node.left = self.insertHelper(node.left, booking)
-
         elif booking.date_time > node.data_time:
+            node.right = self.insertHelper(node.right, booking)
+        elif booking.date_time == node.data_time:
             node.right = self.insertHelper(node.right, booking)
 
         return node
@@ -173,19 +185,103 @@ class BookingManager:
     def __init__(self):
         self.bst = BookingBST()
         self._id_map: dict[str, Booking] = {}
+        self.next_booking_id = "1"
 
+    # Asked chat: I want a user to input str: 'HH:MM' and a function that checks if its in that format. If it is in the format 'H:MM' i want it to convert it to 'HH:MM'
+    def normalize_time(self, time_str):
+        # Match H:MM or HH:MM (hours 0–23, minutes 00–59)
+        pattern = r'^(\d{1,2}):([0-5]\d)$'
+        match = re.match(pattern, time_str)
+
+        if not match:
+            return None  # Invalid format
+
+        hours, minutes = match.groups()
+
+        # Convert hour to integer and back to 2 digits
+        hours = int(hours)
+
+        if hours > 23:
+            return None  # Invalid hour range
+
+        return f"{hours:02d}:{minutes}"
+
+    # asked chat: now the same with YYYY-MM-DD and do the same with month and day for YYYY-M-D
+    def normalize_date(self, date_str):
+        # Match YYYY-M-D, YYYY-MM-D, YYYY-M-DD, YYYY-MM-DD
+        pattern = r'^(\d{4})-(\d{1,2})-(\d{1,2})$'
+        match = re.match(pattern, date_str)
+
+        if not match:
+            return None  # Invalid format
+
+        year, month, day = match.groups()
+
+        year = int(year)
+        month = int(month)
+        day = int(day)
+
+        # Basic validation
+        if not (1 <= month <= 12):
+            return None
+        if not (1 <= day <= 31):
+            return None
+
+        # Optional: stricter validation (e.g., Feb, leap years)
+        try:
+            from datetime import datetime
+            datetime(year, month, day)
+        except ValueError:
+            return None
+
+        return f"{year:04d}-{month:02d}-{day:02d}"
     def add_booking(self, booking: Booking, room=None):
-        if booking.booking_id in self._id_map:
-            print(f"ERROR. Booking ID '{booking.booking_id}' already exists.")
+        # check if booking is valid
+        time_check = self.normalize_time(booking.start_time)
+        if not time_check:
+            print("Invalid start time")
+            return False
+        else:
+            booking.start_time = time_check
+        time_check = self.normalize_time(booking.end_time)
+        if not time_check:
+            print("Invalid end time")
+            return False
+        else:
+            booking.end_time = time_check
+
+        date_check = self.normalize_date(booking.date)
+        if not date_check:
+            print("Invalid date")
+            return False
+        else:
+            booking.date = date_check
+        booking.date_time = (booking.date, booking.start_time)
+        if booking.start_time >= booking.end_time:
+            print("End time must be later than start time.")
+            return False
+        # check if booking time overlaps with other
+        if self.bst.overlap_booking(self.bst.root, booking):
+            print(f"Error. Booking time overlaps with other booking")
+            if room is not None:
+                print(f"Bookings for {booking.date}:")
+                for slot in room.bookings:
+                    if slot.date == booking.date:
+                        print(slot)
             return False
 
+
+
+        booking.booking_id = self.next_booking_id
+        self.next_booking_id = int(self.next_booking_id) + 1
+        self.next_booking_id = str(self.next_booking_id)
         self.bst.insert(booking)
         self._id_map[booking.booking_id] = booking
 
         if room is not None:
             room.bookings.append(booking)
 
-        print(f"ADD {booking}")
+        print(f"Booking complete:\n {booking}")
         return True
 
     def remove_booking(self, booking_id: str, room=None):
@@ -197,7 +293,7 @@ class BookingManager:
         self.bst.remove(booking_id)
 
         if room is not None and booking in room.bookings:
-            room.bookings.remove(booking)
+            room.bookings.pop(booking)
 
         print(f"REMOVED. Removed booking {booking_id}")
         
@@ -255,4 +351,4 @@ class BookingManager:
             print("  (none)")
         
         for b in bookings:
-            print(f"  {b}")
+            print(f"{b}")

@@ -1,7 +1,4 @@
 import copy
-
-from fontTools.mtiLib import build
-
 from Building import Building
 from Room import Room
 

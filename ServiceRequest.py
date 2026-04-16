@@ -4,7 +4,7 @@ class ServiceRequest:
         self.priority = priority 
 
     def __repr__(self):
-        levels = {1: "High", 2: "Standard", 3: "Low"}
+        levels = {1: "Emergency", 2: "Standard", 3: "Low"}
         return f"[{levels[self.priority]}] {self.description}"
 
 
